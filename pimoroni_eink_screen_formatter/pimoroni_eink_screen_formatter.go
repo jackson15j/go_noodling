@@ -12,7 +12,7 @@ func main() {
 	line_length := 5
 	fmt.Println("Hello, World!")
 	fmt.Println(Truncate("Hello, World!", line_length))
-	TruncateFilesInFolder("test_data", 50)
+	TruncateFilesInFolder("test_data", 50, 10)
 }
 
 // TODO: read/write files.
@@ -35,14 +35,17 @@ func Truncate(line string, line_length int) (string, error) {
 }
 
 // Return a new multi-line string with each line truncated.
-func TruncateLines(text string, line_length int) (string, error) {
+func TruncateLines(text string, line_length int, max_lines int) (string, error) {
 	lines, err := splitLines(text)
 	if err != nil {
 		log.Fatal(err)
 		return "", err
 	}
 	truncated_lines := []string{}
-	for _, line := range lines {
+	for i, line := range lines {
+		if max_lines != 0 && i == max_lines {
+			break
+		}
 		truncated_line, err := Truncate(line, line_length)
 		if err != nil {
 			log.Fatal(err)
@@ -62,7 +65,7 @@ func TruncateLines(text string, line_length int) (string, error) {
 func splitLines(text string) ([]string, error) { return strings.Split(text, "\n"), nil }
 func joinLines(lines []string) (string, error) { return strings.Join(lines[:], "\n"), nil }
 
-func TruncateFilesInFolder(dir string, line_length int) error {
+func TruncateFilesInFolder(dir string, line_length int, max_lines int) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		log.Fatal(err)
@@ -78,7 +81,7 @@ func TruncateFilesInFolder(dir string, line_length int) error {
 			log.Fatal(err)
 			return err
 		}
-		truncated_text, err := TruncateLines(string(content), line_length)
+		truncated_text, err := TruncateLines(string(content), line_length, max_lines)
 		if err != nil {
 			log.Fatal(err)
 			return err
