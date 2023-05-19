@@ -21,3 +21,12 @@ func TestTruncateLines(t *testing.T) {
 		t.Fatalf(`TruncateLines(text) = %q, %v, want exp, error`, msg, err)
 	}
 }
+
+func TestTruncateLinesHandleEmptyLines(t *testing.T) {
+	text := "First long line.\n\n\n"
+	exp := "First\n\n\n"
+	msg, err := TruncateLines(text)
+	if msg != exp || err != nil {
+		t.Fatalf(`TruncateLines(text) = %q, %v, want exp, error`, msg, err)
+	}
+}
