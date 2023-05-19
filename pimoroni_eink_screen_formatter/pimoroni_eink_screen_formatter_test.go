@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -36,7 +37,7 @@ func TestTruncateLinesHandleEmptyLines(t *testing.T) {
 }
 
 func TestTruncateLinesFromAFile(t *testing.T) {
-	content, err := os.ReadFile("test_data/file1.txt")
+	content, err := os.ReadFile(filepath.Join("test_data", "file1.txt"))
 	if err != nil {
 		t.Fatalf(`Reading test file failed: %v`, err)
 	}
@@ -44,6 +45,18 @@ func TestTruncateLinesFromAFile(t *testing.T) {
 	line_length := 5
 	msg, err := TruncateLines(string(content), line_length)
 	if msg != exp || err != nil {
+		t.Fatalf(`TruncateLines(text) = %q, %v, want exp, error`, msg, err)
+	}
+}
+
+func TestTruncateLinesFromAFileLineLengthTooLarge(t *testing.T) {
+	content, err := os.ReadFile(filepath.Join("test_data", "file2.txt"))
+	if err != nil {
+		t.Fatalf(`Reading test file failed: %v`, err)
+	}
+	line_length := 1000
+	msg, err := TruncateLines(string(content), line_length)
+	if err != nil {
 		t.Fatalf(`TruncateLines(text) = %q, %v, want exp, error`, msg, err)
 	}
 }

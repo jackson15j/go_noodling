@@ -26,6 +26,11 @@ func Truncate(line string, line_length int) (string, error) {
 		// Avoid runtime slice error if line is empty. Just return.
 		return line, nil
 	}
+	if line_length > len(line) {
+		// Avoid runtime slice error if slicing greater than line length. Just
+		// return.
+		return line, nil
+	}
 	return line[:line_length], nil
 }
 
