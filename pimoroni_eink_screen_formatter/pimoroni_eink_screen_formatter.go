@@ -12,7 +12,7 @@ func main() {
 	line_length := 5
 	fmt.Println("Hello, World!")
 	fmt.Println(Truncate("Hello, World!", line_length))
-	TruncateFilesInFolder("test_data", 5)
+	TruncateFilesInFolder("test_data", 50)
 }
 
 // TODO: read/write files.
