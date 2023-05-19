@@ -15,6 +15,9 @@ func main() {
 
 // Truncate the input string.
 func Truncate(line string) (string, error) {
+	if len(line) == 0 {
+		// Avoid runtime slice error if line is empty. Just return.
+		return line, nil}
 	return line[:5], nil
 }
 
