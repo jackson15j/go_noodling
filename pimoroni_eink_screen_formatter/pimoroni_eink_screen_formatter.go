@@ -9,24 +9,28 @@ import (
 )
 
 func main() {
+	line_length := 5
 	fmt.Println("Hello, World!")
-	fmt.Println(Truncate("Hello, World!"))
-	TruncateFilesInFolder("test_data")
+	fmt.Println(Truncate("Hello, World!", line_length))
+	TruncateFilesInFolder("test_data", 5)
 }
 
 // TODO: read/write files.
 
 // Truncate the input string.
-func Truncate(line string) (string, error) {
+func Truncate(line string, line_length int) (string, error) {
+	if line_length == 0 {
+		line_length = 5
+	}
 	if len(line) == 0 {
 		// Avoid runtime slice error if line is empty. Just return.
 		return line, nil
 	}
-	return line[:5], nil
+	return line[:line_length], nil
 }
 
 // Return a new multi-line string with each line truncated.
-func TruncateLines(text string) (string, error) {
+func TruncateLines(text string, line_length int) (string, error) {
 	lines, err := splitLines(text)
 	if err != nil {
 		log.Fatal(err)
@@ -34,7 +38,7 @@ func TruncateLines(text string) (string, error) {
 	}
 	truncated_lines := []string{}
 	for _, line := range lines {
-		truncated_line, err := Truncate(line)
+		truncated_line, err := Truncate(line, line_length)
 		if err != nil {
 			log.Fatal(err)
 			return "", err
@@ -53,7 +57,7 @@ func TruncateLines(text string) (string, error) {
 func splitLines(text string) ([]string, error) { return strings.Split(text, "\n"), nil }
 func joinLines(lines []string) (string, error) { return strings.Join(lines[:], "\n"), nil }
 
-func TruncateFilesInFolder(dir string) error {
+func TruncateFilesInFolder(dir string, line_length int) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		log.Fatal(err)
@@ -69,7 +73,7 @@ func TruncateFilesInFolder(dir string) error {
 			log.Fatal(err)
 			return err
 		}
-		truncated_text, err := TruncateLines(string(content))
+		truncated_text, err := TruncateLines(string(content), line_length)
 		if err != nil {
 			log.Fatal(err)
 			return err
