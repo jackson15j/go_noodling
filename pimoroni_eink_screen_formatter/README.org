@@ -13,3 +13,5 @@ Links to the board/display:
 - [[https://learn.pimoroni.com/article/getting-started-with-inky-frame][Pimoroni Learn: Getting Started with Inky Frame]] - The 4"-7" range of Eink
   screens.
 - [[https://github.com/pimoroni/pimoroni-pico][Github: pimoroni/pimoroni-pico]].
+
+[[https://shop.pimoroni.com/cdn/shop/products/pico-inky-square-1_1500x1500.jpg]]
