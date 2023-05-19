@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"strings"
 )
 
@@ -9,9 +10,8 @@ func main() {
 	fmt.Println("Hello, World!")
 	fmt.Println(Truncate("Hello, World!"))
 }
-// TODO: don't swallow errors!
-// TODO: read/write files.
 
+// TODO: read/write files.
 
 // Truncate the input string.
 func Truncate(line string) (string, error) {
@@ -20,14 +20,27 @@ func Truncate(line string) (string, error) {
 
 // Return a new multi-line string with each line truncated.
 func TruncateLines(text string) (string, error) {
-	lines, _ := splitLines(text)
+	lines, err := splitLines(text)
+	if err != nil {
+		log.Fatal(err)
+		return "", err
+	}
 	truncated_lines := []string{}
 	for i, line := range lines {
 		fmt.Printf("index: %d, line: %s\n", i, line)
-		truncated_line, _ := Truncate(line)
+		truncated_line, err := Truncate(line)
+		if err != nil {
+			log.Fatal(err)
+			return "", err
+		}
 		truncated_lines = append(truncated_lines, truncated_line)
 	}
-	truncated_text, _ := joinLines(truncated_lines)
+	truncated_text, err := joinLines(truncated_lines)
+	if err != nil {
+		log.Fatal(err)
+		return "", err
+	}
+
 	return truncated_text, nil
 }
 
