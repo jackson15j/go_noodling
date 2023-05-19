@@ -1,0 +1,15 @@
+#+OPTIONS: \n:nil toc:t num:nil html-postamble:nil
+#+PROPERTY: header-args:shell :prologue "exec 2>&1" :epilogue ":" :results drawer
+* Pimoroni Eink Screen Formatter
+Simple Go project for the Pico Inky Eink display, to take dumped emacs
+org-agenda files, truncate them to the line length/numbers for the eink display
+and then serve them (via a web server) for the pico to fetch and display.
+
+This section library will handle the truncation.
+
+Links to the board/display:
+
+- [[https://shop.pimoroni.com/products/pico-inky-pack?variant=40044626051155][Pimoroni Shop: Pico Inky Pack]].
+- [[https://learn.pimoroni.com/article/getting-started-with-inky-frame][Pimoroni Learn: Getting Started with Inky Frame]] - The 4"-7" range of Eink
+  screens.
+- [[https://github.com/pimoroni/pimoroni-pico][Github: pimoroni/pimoroni-pico]].

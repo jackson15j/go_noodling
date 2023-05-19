@@ -1,0 +1,6 @@
+#+OPTIONS: \n:nil toc:t num:nil html-postamble:nil
+#+PROPERTY: header-args:shell :prologue "exec 2>&1" :epilogue ":" :results drawer
+* Go_Noodling
+Monorepo of random Go experiments as I learn the language.
+** Projects/Libraries:
+- [[file:pimoroni_eink_screen_formatter/README.org][Pimoroni Eink Screen Formatter]].
