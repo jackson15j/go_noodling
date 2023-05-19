@@ -29,8 +29,7 @@ func TruncateLines(text string) (string, error) {
 		return "", err
 	}
 	truncated_lines := []string{}
-	for i, line := range lines {
-		fmt.Printf("index: %d, line: %s\n", i, line)
+	for _, line := range lines {
 		truncated_line, err := Truncate(line)
 		if err != nil {
 			log.Fatal(err)
