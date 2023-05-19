@@ -1,0 +1,19 @@
+Monday     15 May 2023 W20
+  Project:     Scheduled:  [[<url>][<url_description_1>]]:
+  Project:     Scheduled:  TODO [[<url>][<url_description_2>]]:                     :DevOps:
+Tuesday    16 May 2023
+Wednesday  17 May 2023
+Thursday   18 May 2023
+  Onboarding: 13:30-13:55 [#A] Meet the Lead - TeamX (Squad Lead):
+Friday     19 May 2023
+               8:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+               9:54 ┄┄┄┄┄ ← now ───────────────────────────────────────────────
+              10:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+              12:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  Admin:     14:00 ┄┄┄┄┄ Scheduled:  Do a task!
+              14:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+              16:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+              18:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+              20:00 ┄┄┄┄┄ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+Saturday   20 May 2023
+Sunday     21 May 2023
