@@ -12,7 +12,7 @@ func main() {
 	line_length := 5
 	fmt.Println("Hello, World!")
 	fmt.Println(Truncate("Hello, World!", line_length))
-	TruncateFilesInFolder("test_data", 50, 10)
+	TruncateFilesInFolder("test_data", 50, 10, filepath.Join("build", "truncated"))
 }
 
 // TODO: read/write files.
@@ -65,9 +65,14 @@ func TruncateLines(text string, line_length int, max_lines int) (string, error) 
 func splitLines(text string) ([]string, error) { return strings.Split(text, "\n"), nil }
 func joinLines(lines []string) (string, error) { return strings.Join(lines[:], "\n"), nil }
 
-func TruncateFilesInFolder(dir string, line_length int, max_lines int) error {
+func TruncateFilesInFolder(dir string, line_length int, max_lines int, output string) error {
 	files, err := os.ReadDir(dir)
 	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	if err := os.MkdirAll(output, 0770); err != nil {
 		log.Fatal(err)
 		return err
 	}
@@ -87,7 +92,16 @@ func TruncateFilesInFolder(dir string, line_length int, max_lines int) error {
 			return err
 		}
 		fmt.Printf("Truncated content for: %s: %s\n", path, truncated_text)
-		// TODO: Write truncated text to a file.
+
+		// Write truncated text to a file.
+		tmpfile, err := os.Create(filepath.Join(output, file.Name()))
+		if err != nil {
+			log.Fatal(err)
+			return err
+		}
+		tmpfile.WriteString(truncated_text)
+		fmt.Printf("Wrote truncated content to: %v\n", tmpfile.Name())
 	}
+
 	return nil
 }
