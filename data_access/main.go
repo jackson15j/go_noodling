@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
@@ -9,6 +10,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/joho/godotenv"
 )
+
+var db *sql.DB
 
 func main() {
 	// Read `.env` file to populate ENV.
@@ -18,14 +21,14 @@ func main() {
 	}
 
 	// urlExample := "postgres://username:password@localhost:5432/database_name"
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	db, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	defer conn.Close(context.Background())
+	defer db.Close(context.Background())
 
-	pingErr := conn.Ping(context.Background())
+	pingErr := db.Ping(context.Background())
 	if pingErr != nil {
 		log.Fatal(pingErr)
 	}
@@ -33,7 +36,7 @@ func main() {
 	var title string
 	var artist string
 	var price float32
-	err = conn.QueryRow(context.Background(), "select title, artist, price from data_access.album where id=$1", 3).Scan(&title, &artist, &price)
+	err = db.QueryRow(context.Background(), "select title, artist, price from data_access.album where id=$1", 3).Scan(&title, &artist, &price)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
 		os.Exit(1)
