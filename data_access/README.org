@@ -7,14 +7,18 @@ tweaked to work on a postgres docker container.
 ** Populate DB:
 
 #+NAME: Populate DB.
-#+BEGIN_SRC shell :var user="postgres" password="example" host="localhost" port=5434 dbname="xero" filename="create-tables.sql"
+#+BEGIN_SRC shell :var user="postgres" password="example" host="localhost" port=5434 dbname="recordings" filename="create-tables.sql"
   source ~/.zshrc
   PGPASSWORD=$password psql -h $host -p $port -U $user -d $dbname -f $filename
 #+END_SRC
 
 #+RESULTS: Populate DB.
 #+begin_src shell
+psql:create-tables.sql:2: NOTICE:  schema "data_access" does not exist, skipping
 DROP TABLE
+psql:create-tables.sql:3: NOTICE:  schema "data_access" does not exist, skipping
+DROP SCHEMA
+CREATE SCHEMA
 CREATE TABLE
 INSERT 0 4
  id |     title     |     artist     | price 
