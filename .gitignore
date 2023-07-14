@@ -21,3 +21,5 @@
 go.work
 /pimoroni_eink_screen_formatter/pimoroni_eink_screen_formatter
 **/build/
+/data_access/data_access
+.env
