@@ -2,7 +2,10 @@ module go_noodling/data_access
 
 go 1.20
 
-require github.com/jackc/pgx/v5 v5.4.2
+require (
+	github.com/jackc/pgx/v5 v5.4.2
+	github.com/joho/godotenv v1.5.1
+)
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
