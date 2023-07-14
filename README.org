@@ -2,6 +2,13 @@
 #+PROPERTY: header-args:shell :prologue "exec 2>&1" :epilogue ":" :results drawer
 * Go_Noodling
 Monorepo of random Go experiments as I learn the language.
+
+*NOTE:* See: [[https://github.com/jackson15j/programming_notes/blob/master/notes.org#go][Programming Notes: Go]] ([[file:../../org/programming_notes/notes.org::*Go:][Go (local link)]]) for more notes.
 ** Projects/Libraries:
+- [[file:data_access/][Data Access (via postgres)]].
 - [[file:pimoroni_eink_screen_formatter/][Pimoroni Eink Screen Formatter]].
 - [[file:udemy_go_training/][Udemy Go Training exercises]].
+
+*NOTE:*
+
+- ~go work use [-r] [dir]~: adds a use directive to the ~go.work~ file for dir,
