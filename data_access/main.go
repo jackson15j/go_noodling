@@ -25,6 +25,11 @@ func main() {
 	}
 	defer conn.Close(context.Background())
 
+	pingErr := conn.Ping(context.Background())
+	if pingErr != nil {
+		log.Fatal(pingErr)
+	}
+
 	var title string
 	var artist string
 	var price float32
