@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
@@ -23,7 +22,7 @@ func main() {
 	// urlExample := "postgres://username:password@localhost:5432/database_name"
 	db, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		log.Fatalf("Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
 	defer db.Close(context.Background())
@@ -38,9 +37,9 @@ func main() {
 	var price float32
 	err = db.QueryRow(context.Background(), "select title, artist, price from data_access.album where id=$1", 3).Scan(&title, &artist, &price)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
+		log.Fatalf("QueryRow failed: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println(title, artist, price)
+	log.Printf("Query output: %v - %v, %v", title, artist, price)
 }
