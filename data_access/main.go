@@ -25,13 +25,14 @@ func main() {
 	}
 	defer conn.Close(context.Background())
 
-	var name string
-	var weight int64
-	err = conn.QueryRow(context.Background(), "select name, weight from widgets where id=$1", 42).Scan(&name, &weight)
+	var title string
+	var artist string
+	var price float32
+	err = conn.QueryRow(context.Background(), "select title, artist, price from data_access.album where id=$1", 3).Scan(&title, &artist, &price)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println(name, weight)
+	fmt.Println(title, artist, price)
 }
