@@ -54,6 +54,13 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("Albums found: %v\n", albums)
+
+	// Hard-code ID 2 here to test the query.
+	alb, err := albumByID(2)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Album found: %v\n", alb)
 }
 
 // Factored out PGX example from main page to use global `db` pointer.
@@ -61,6 +68,7 @@ func pgxQueryExample() {
 	var title string
 	var artist string
 	var price float32
+	// `QueryRow` returns a single row.
 	err := db.QueryRow("select title, artist, price from data_access.album where id=$1", 3).Scan(&title, &artist, &price)
 	if err != nil {
 		log.Fatalf("QueryRow failed: %v\n", err)
@@ -75,6 +83,7 @@ func albumsByArtist(name string) ([]Album, error) {
 	// An albums slice to hold data from returned rows.
 	var albums []Album
 
+	// `Query` returns a list of rows to iterate over.
 	rows, err := db.Query("SELECT * FROM data_access.album WHERE artist = $1", name)
 	if err != nil {
 		return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
@@ -92,4 +101,19 @@ func albumsByArtist(name string) ([]Album, error) {
 		return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
 	}
 	return albums, nil
+}
+
+// albumByID queries for the album with the specified ID.
+func albumByID(id int64) (Album, error) {
+	// An album to hold data from the returned row.
+	var alb Album
+
+	row := db.QueryRow("SELECT * FROM data_access.album WHERE id = $1", id)
+	if err := row.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
+		if err == sql.ErrNoRows {
+			return alb, fmt.Errorf("albumsById %d: no such album", id)
+		}
+		return alb, fmt.Errorf("albumsById %d: %v", id, err)
+	}
+	return alb, nil
 }
