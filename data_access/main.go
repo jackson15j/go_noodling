@@ -1,12 +1,18 @@
+// https://go.dev/doc/tutorial/database-access
 package main
 
 import (
-	"context"
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
-	"github.com/jackc/pgx/v5"
+	// Non-`database/sql` compatible custom Postgres-only bindings for
+	// Features/Performance.
+	// "github.com/jackc/pgx/v5"
+	//
+	// `database/sql`-compliant library.
+	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/joho/godotenv"
 )
 
@@ -20,22 +26,29 @@ func main() {
 	}
 
 	// urlExample := "postgres://username:password@localhost:5432/database_name"
-	db, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+	// For the `database/sql` version, which can be swapped to other DB types:
+	// https://github.com/jackc/pgx/wiki/Getting-started-with-pgx-through-database-sql
+	db, err = sql.Open("pgx", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	defer db.Close(context.Background())
+	defer db.Close()
 
-	pingErr := db.Ping(context.Background())
+	pingErr := db.Ping()
 	if pingErr != nil {
 		log.Fatal(pingErr)
 	}
 
+	pgxQueryExample()
+}
+
+// Factored out PGX example from main page to use global `db` pointer.
+func pgxQueryExample() {
 	var title string
 	var artist string
 	var price float32
-	err = db.QueryRow(context.Background(), "select title, artist, price from data_access.album where id=$1", 3).Scan(&title, &artist, &price)
+	err := db.QueryRow("select title, artist, price from data_access.album where id=$1", 3).Scan(&title, &artist, &price)
 	if err != nil {
 		log.Fatalf("QueryRow failed: %v\n", err)
 		os.Exit(1)
