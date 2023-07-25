@@ -3,6 +3,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -61,6 +62,16 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("Album found: %v\n", alb)
+
+	albID, err := addAlbum(Album{
+		Title:  "The Modern Sound of Betty Carter",
+		Artist: "Betty Carter",
+		Price:  49.99,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("ID of added album: %v\n", albID)
 }
 
 // Factored out PGX example from main page to use global `db` pointer.
@@ -116,4 +127,35 @@ func albumByID(id int64) (Album, error) {
 		return alb, fmt.Errorf("albumsById %d: %v", id, err)
 	}
 	return alb, nil
+}
+
+// addAlbum adds the specified album to the database,
+// returning the album ID of the new entry
+func addAlbum(alb Album) (int64, error) {
+	result, err := db.Exec("INSERT INTO data_access.album (title, artist, price) VALUES ($1, $2, $3)", alb.Title, alb.Artist, alb.Price)
+	if err != nil {
+		return 0, fmt.Errorf("Exec - addAlbum: %v", err)
+	}
+	// `LastInsertId is not supported by this driver`.
+	// See: https://github.com/jackc/pgx/issues/1483 -
+	// "LastInsertId is not supported by this driver #1483".
+	// Suggested workaround is a `db.QueryRow()` to INSERT
+	// + `RETURNING id` on the end of the Query.
+	id, err := result.LastInsertId()
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println(err.Error())
+		fmt.Println(err == errors.New("LastInsertId is not supported by this driver"))
+		x := errors.New("LastInsertId is not supported by this driver")
+		fmt.Println(err == x)
+		fmt.Println(err.Error() == "LastInsertId is not supported by this driver")
+		errors.Is(err, errors.New("LastInsertId is not supported by this driver"))
+		if err.Error() == x.Error() {
+			fmt.Println(result.RowsAffected())
+			return 0, fmt.Errorf("addAlbum: Album added, but failed to return ID. %v", err)
+		} else {
+			return 0, fmt.Errorf("LastInsertId - addAlbum: %v", err)
+		}
+	}
+	return id, nil
 }
