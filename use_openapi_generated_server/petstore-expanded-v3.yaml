@@ -32,6 +32,13 @@ paths:
             type: array
             items:
               type: string
+          examples:
+            FETCH_PET_TAGS_SUCCESS:
+              value: dog
+            FETCH_PET_MULTIPLE_TAGS_SUCCESS:
+              value: dog,cat
+            FETCH_PET_UNKNOWN_TAGS_SUCCESS:
+              value: unknown
         - name: limit
           in: query
           description: maximum number of results to return
@@ -48,6 +55,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pet'
+              examples:
+                FETCH_PET_TAGS_SUCCESS:
+                  value:
+                    name: Rex
+                    tag: dog
+                    id: 1000
+                FETCH_PET_MULTIPLE_TAGS_SUCCESS:
+                  value:
+                    name: Rex
+                    tag: dog
+                    id: 1000
+                FETCH_PET_UNKNOWN_TAGS_SUCCESS:
+                  value: null
         default:
           description: unexpected error
           content:
