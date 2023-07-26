@@ -2,7 +2,12 @@ openapi: "3.0.0"
 info:
   version: 3.0.0
   title: Swagger Petstore
-  description: A sample API that uses a petstore as an example to demonstrate features in the OpenAPI 3.0 specification
+  description: |
+    A sample API that uses a petstore as an example to demonstrate features in
+    the OpenAPI 3.0 specification.
+    NOTE: heavily modified from:
+    https://github.com/OAI/OpenAPI-Specification/blob/main/examples/v3.0/petstore-expanded.yaml
+    to have examples that specmatic will use during testing.
   termsOfService: http://swagger.io/terms/
   contact:
     name: Swagger API Team
