@@ -103,6 +103,8 @@ paths:
           examples:
             FETCH_PET_SUCCESS:
               value: 1000
+            FETCH_PET_NOT_FOUND:
+              value: 65
       responses:
         '200':
           description: pet response
@@ -116,6 +118,17 @@ paths:
                     name: Rex
                     tag: dog
                     id: 1000
+        '404':
+          description: Could not find pet with ID <id>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                FETCH_PET_NOT_FOUND:
+                  value:
+                    code: 404
+                    message: Could not find pet with ID 65
         default:
           description: unexpected error
           content:
