@@ -1,5 +1,9 @@
 name: Pimoroni Eink Screen Formatter action
-on: [push]
+on:
+  push:
+    paths:
+      - 'pimoroni_eink_screen_formatter/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
