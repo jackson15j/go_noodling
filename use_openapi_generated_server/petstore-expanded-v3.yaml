@@ -71,6 +71,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
+              example:
+                name: Rex
+                tag: dog
+                id: 1000
         default:
           description: unexpected error
           content:
@@ -145,6 +149,9 @@ components:
           type: string
         tag:
           type: string
+      example:
+        name: Rex
+        tag: dog
 
     Error:
       type: object
