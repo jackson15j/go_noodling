@@ -100,6 +100,9 @@ paths:
           schema:
             type: integer
             format: int64
+          examples:
+            FETCH_PET_SUCCESS:
+              value: 1000
       responses:
         '200':
           description: pet response
@@ -107,6 +110,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
+              examples:
+                FETCH_PET_SUCCESS:
+                  value:
+                    name: Rex
+                    tag: dog
+                    id: 1000
         default:
           description: unexpected error
           content:
