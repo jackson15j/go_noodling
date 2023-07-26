@@ -57,15 +57,9 @@ paths:
                   $ref: '#/components/schemas/Pet'
               examples:
                 FETCH_PET_TAGS_SUCCESS:
-                  value:
-                    name: Rex
-                    tag: dog
-                    id: 1000
+                  $ref: '#/components/examples/PetResponse'
                 FETCH_PET_MULTIPLE_TAGS_SUCCESS:
-                  value:
-                    name: Rex
-                    tag: dog
-                    id: 1000
+                  $ref: '#/components/examples/PetResponse'
                 FETCH_PET_UNKNOWN_TAGS_SUCCESS:
                   value: null
         default:
@@ -104,10 +98,7 @@ paths:
                 $ref: '#/components/schemas/Pet'
               examples:
                 CREATE_NEWPET_SUCCESS:
-                  value:
-                    name: Rex
-                    tag: dog
-                    id: 1000
+                  $ref: '#/components/examples/PetResponse'
         default:
           description: unexpected error
           content:
@@ -140,10 +131,7 @@ paths:
                 $ref: '#/components/schemas/Pet'
               examples:
                 FETCH_PET_SUCCESS:
-                  value:
-                    name: Rex
-                    tag: dog
-                    id: 1000
+                  $ref: '#/components/examples/PetResponse'
         '404':
           description: Could not find pet with ID <id>
           content:
@@ -232,3 +220,10 @@ components:
           format: int32
         message:
           type: string
+
+  examples:
+    PetResponse:
+      value:
+        name: Rex
+        tag: dog
+        id: 1000
