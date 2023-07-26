@@ -11,15 +11,15 @@ type Error struct {
 
 // NewPet defines model for NewPet.
 type NewPet struct {
-	Name string  `json:"name"`
-	Tag  *string `json:"tag,omitempty"`
+	Name string `json:"name"`
+	Tag  string `json:"tag"`
 }
 
 // Pet defines model for Pet.
 type Pet struct {
-	Id   int64   `json:"id"`
-	Name string  `json:"name"`
-	Tag  *string `json:"tag,omitempty"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
+	Tag  string `json:"tag"`
 }
 
 // FindPetsParams defines parameters for FindPets.
