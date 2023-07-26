@@ -1,0 +1,26 @@
+# Variables
+:port = 8083
+:host = http://localhost::port
+:headers = <<
+Content-Type: application/json
+
+# GET root = 404 Not Found
+GET :host
+# GET all pets = `null` if empty. JSONL if data.
+GET :host/pets
+# GET specific pet.
+# - 200 with data.
+# - 404 "Could not find pet with ID 1001", when missing.
+GET :host/pets/1000
+
+# POST
+# - 201 Created. Returns Data JSON + `"id": <int>`. ID starts from `1000`.
+# - `400`, `Invalid format for NewPet` if bad request, due to missing `Content-Type`.
+POST :host/pets
+:headers
+{"name": "Bob", "tag": "cat"}
+
+# DELETE
+# - 204 No Content, on success.
+# - 404 "Could not find pet with ID 1001", when missing.
+DELETE :host/pets/1001
