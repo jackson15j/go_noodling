@@ -61,7 +61,7 @@ func (p *PetStore) FindPets(ctx echo.Context, params models.FindPetsParams) erro
 		if params.Tags != nil {
 			// If we have tags,  filter pets by tag
 			for _, t := range *params.Tags {
-				if pet.Tag != nil && (*pet.Tag == t) {
+				if &pet.Tag != nil && (&pet.Tag == &t) {
 					result = append(result, pet)
 				}
 			}

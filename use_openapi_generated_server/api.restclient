@@ -15,10 +15,13 @@ GET :host/pets/1000
 
 # POST
 # - 201 Created. Returns Data JSON + `"id": <int>`. ID starts from `1000`.
+#   - in V2 spec I made `tag` required. with current code: `"tag": ""` is supplied
+#     by the server if missing.
 # - `400`, `Invalid format for NewPet` if bad request, due to missing `Content-Type`.
 POST :host/pets
 :headers
-{"name": "Bob", "tag": "cat"}
+{"name": "Rex"}
+# {"name": "Bob", "tag": "cat"}
 
 # DELETE
 # - 204 No Content, on success.
