@@ -124,9 +124,25 @@ paths:
           schema:
             type: integer
             format: int64
+          examples:
+            DELETE_PET_SUCCESS:
+              value: 1000
+            DELETE_PET_NOT_FOUND:
+              value: 65
       responses:
         '204':
           description: pet deleted
+        '404':
+          description: Could not find pet with ID <id>
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                DELETE_PET_NOT_FOUND:
+                  value:
+                    code: 404
+                    message: Could not find pet with ID 65
         default:
           description: unexpected error
           content:
