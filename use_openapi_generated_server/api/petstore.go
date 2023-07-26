@@ -120,7 +120,7 @@ func (p *PetStore) AddPet(ctx echo.Context) error {
 	return nil
 }
 
-func (p *PetStore) FindPetByID(ctx echo.Context, petId int64) error {
+func (p *PetStore) FindPetById(ctx echo.Context, petId int64) error {
 	p.Lock.Lock()
 	defer p.Lock.Unlock()
 
