@@ -138,12 +138,13 @@ components:
     NewPet:
       type: object
       required:
-        - name  
+        - name
+        - tag
       properties:
         name:
           type: string
         tag:
-          type: string    
+          type: string
 
     Error:
       type: object
