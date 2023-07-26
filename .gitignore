@@ -23,3 +23,4 @@ go.work
 **/build/
 /data_access/data_access
 .env
+/use_openapi_generated_server/use_openapi_generated_server
