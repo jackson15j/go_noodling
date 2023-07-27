@@ -28,3 +28,9 @@ test:
 tidy:
 	@echo "tidy..."
 	go mod tidy
+
+build-docker:
+	docker build --progress=plain -t use-openapi-generated-server .
+
+run-docker: build-docker
+	docker run --rm --name petstore use-openapi-generated-server
