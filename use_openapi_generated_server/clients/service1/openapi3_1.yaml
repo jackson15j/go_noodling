@@ -1,0 +1,54 @@
+components:
+  schemas:
+    health-read-get-200-response:
+      properties:
+        message:
+          type: string
+      required:
+        - message
+      type: object
+    health-read-get-500-response:
+      properties:
+        error:
+          type: string
+      required:
+        - error
+      type: object
+info:
+  description: ''
+  title: Service1
+  version: v1.0.0
+openapi: 3.1.0
+paths:
+  /health:
+    get:
+      description: Service Health checks to poll for _'Aliveness'_.
+      operationId: health-read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+                type: object
+          description: >-
+            Successful response returned when the Service is alive and ready to
+            process work.
+        '500':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                required:
+                  - error
+                type: object
+          description: Catastrophic error of the Service. Report Issue.
+      summary: ''
+      tags:
+        - Health
