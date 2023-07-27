@@ -1,0 +1,35 @@
+# Links to using specmatic for contract testing:
+#
+# - https://specmatic.in/documentation/continuous_integration.html
+# - https://github.com/marketplace/actions/setup-specmatic-environment
+# - https://github.com/znsio/specmatic-order-api/blob/github-actions-setup-specmatic/.github/workflows/command_line_contract_tests.yml
+name: Docker - Use OpenAPI Generated Server
+on:
+  push:
+    paths:
+      - 'use_openapi_generated_server/**'
+
+permissions:
+  # https://github.com/mikepenz/action-junit-report#pr-run-permissions
+  checks: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Docker Run
+        run: make run-docker
+        working-directory: ./use_openapi_generated_server
+      - name: Setup specmatic
+        uses: airslate-oss/setup-specmatic@v1
+        with:
+          specmatic-version: 0.72.0
+      - name: Run Specmatic contract as test
+        working-directory: ./use_openapi_generated_server
+        run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
+      - name: Publish contract test report
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: '**/contract-test-reports/TEST-*.xml'
