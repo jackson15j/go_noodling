@@ -1,0 +1,11 @@
+# java -jar ~/Downloads/specmatic.jar stub --port 8085 clients/service1/openapi3_1.yaml
+# Variables
+:port = 8085
+:host = http://localhost::port
+:headers = <<
+Content-Type: application/json
+
+# GET root = 400 Bad Request
+GET :host
+# GET Health. 200 OK `{"message": {}}`.
+GET :host/health
