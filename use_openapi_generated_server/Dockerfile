@@ -10,4 +10,7 @@ RUN go mod download && go mod verify
 COPY . .
 RUN go build -v -o /usr/local/bin/app .
 
+# See: `use_openapi_generated_server/main.go::20`
+EXPOSE 8083
+
 CMD ["app"]

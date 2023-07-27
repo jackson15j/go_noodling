@@ -33,7 +33,7 @@ build-docker:
 	docker build --progress=plain -t use-openapi-generated-server .
 
 run-docker: build-docker
-	docker run --rm --name petstore use-openapi-generated-server
+	docker run -p 8083:8083 --rm --name petstore use-openapi-generated-server
 
 ci-run-docker: build-docker
-	docker run -d --rm --name petstore use-openapi-generated-server
+	docker run -d -p 8083:8083 --rm --name petstore use-openapi-generated-server
