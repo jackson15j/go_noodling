@@ -18,8 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Docker Run
-        run: make run-docker
+      - name: Docker Build
+        run: make build-docker
+        working-directory: ./use_openapi_generated_server
+      - name: Docker Run detached
+        run: make ci-run-docker
         working-directory: ./use_openapi_generated_server
       - name: Setup specmatic
         uses: airslate-oss/setup-specmatic@v1

@@ -34,3 +34,6 @@ build-docker:
 
 run-docker: build-docker
 	docker run --rm --name petstore use-openapi-generated-server
+
+ci-run-docker: build-docker
+	docker run -d --rm --name petstore use-openapi-generated-server
