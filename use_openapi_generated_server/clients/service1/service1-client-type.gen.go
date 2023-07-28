@@ -13,6 +13,16 @@ import (
 	"strings"
 )
 
+// HealthReadGet200Response defines model for health-read-get-200-response.
+type HealthReadGet200Response struct {
+	Message string `json:"message"`
+}
+
+// HealthReadGet500Response defines model for health-read-get-500-response.
+type HealthReadGet500Response struct {
+	Error string `json:"error"`
+}
+
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
 
@@ -179,12 +189,8 @@ type ClientWithResponsesInterface interface {
 type HealthReadResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Message string `json:"message"`
-	}
-	JSON500 *struct {
-		Error string `json:"error"`
-	}
+	JSON200      *HealthReadGet200Response
+	JSON500      *HealthReadGet500Response
 }
 
 // Status returns HTTPResponse.Status
@@ -227,18 +233,14 @@ func ParseHealthReadResponse(rsp *http.Response) (*HealthReadResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Message string `json:"message"`
-		}
+		var dest HealthReadGet200Response
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error string `json:"error"`
-		}
+		var dest HealthReadGet500Response
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
