@@ -14,11 +14,13 @@ components:
       required:
         - error
       type: object
+
 info:
   description: ''
   title: Service1
-  version: v1.0.0
+  version: v1.0.2
 openapi: 3.1.0
+
 paths:
   /health:
     get:
@@ -29,12 +31,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  message:
-                    type: string
-                required:
-                  - message
-                type: object
+                $ref: '#/components/schemas/health-read-get-200-response'
           description: >-
             Successful response returned when the Service is alive and ready to
             process work.
@@ -42,12 +39,7 @@ paths:
           content:
             application/json:
               schema:
-                properties:
-                  error:
-                    type: string
-                required:
-                  - error
-                type: object
+                $ref: '#/components/schemas/health-read-get-500-response'
           description: Catastrophic error of the Service. Report Issue.
       summary: ''
       tags:
