@@ -7,6 +7,8 @@ components:
       required:
         - message
       type: object
+      example:
+        message: ok
     health-read-get-500-response:
       properties:
         error:
