@@ -60,9 +60,16 @@ To use [Specmatic] to stub up a Server for Client Development:
 
 To use [Specmatic] to do backwards compatibility checks between specs. eg.
 
-```shell
-java -jar /path/to/specmatic.jar compare <spec_vX.yaml> <spec_vY.yaml>
-```
+- Diff files: `java -jar specmatic.jar compare <spec_vX.yaml> <spec_vY.yaml>`.
+
+Working with changes in-line:
+
+- Git: `java -jar specmatic.jar compatible git file <spec.yaml>` eg. in:
+  `.git/hooks/pre-commit`.
+- CI: `java -jar specmatic.jar compatible git commits <spec.yaml> HEAD HEAD^1`.
+
+See: [Specmatic Docs: Backward Compatibility].
 
 
 [Specmatic]: https://specmatic.in/documentation.html
+[Specmatic Docs: Backward Compatibility]: https://specmatic.in/documentation/backward_compatibility.html
