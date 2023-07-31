@@ -47,11 +47,31 @@ To test/TDD with [Specmatic]:
   ```
 
 # Development:
+## Generate Spec from a live Service:
+
+To use [Specmatic] to generate both an OpenAPI spec + stub Client example JSON
+smart mocks:
+
+- Run [Specmatic] `proxy` with a target folder.
+  ```shell
+  java -jar /path/to/specmatic.jar proxy --target <target_url> <output_dir>
+  ```
+- Make API requests to: `http://localhost:9000`.
+- `C-c` to stop & save generated OpenAPI spec + Client example stubs.
+
+Run [Specmatic] `stub` with generated OpenAPI spec to do Client Development +
+validate generation.
+- **NOTE:** I had seen a generated spec with a missing `Content-Length`
+  header in the Response section, but was present in Request + generated
+  Client stub data. Adding fixed the warning during a `specmatic stub` run.
+- **NOTE:** If keys are non-unique between requests/responses, then the
+  generator will merge them all into the same component!!
+
 ## Client:
 
 To use [Specmatic] to stub up a Server for Client Development:
 
-- Run Sepcmatic `stub` with the chosen OpenAPI spec. eg.
+- Run [Specmatic] `stub` with the chosen OpenAPI spec. eg.
   ```shell
   java -jar /path/to/specmatic.jar stub --port 8085 clients/service1/openapi3_1_v2.yaml
   ```
