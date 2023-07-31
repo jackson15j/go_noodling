@@ -9,3 +9,7 @@ Content-Type: application/json
 GET :host
 # GET Health. 200 OK `{"message": {}}`.
 GET :host/health
+
+# GET Service behind specmatic Proxy Health.
+:port = 9000
+GET :host/health
