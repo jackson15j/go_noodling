@@ -1,4 +1,5 @@
-[[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server.yaml/badge.svg][Use OpenAPI Generated Server]], [[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server-docker.yaml/badge.svg][Docker: Use OpenAPI Generated Server]]
+[[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server.yaml][file:https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server.yaml/badge.svg]]
+[[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server-docker.yaml][file:https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server-docker.yaml/badge.svg]]
 
 * OpenAPI Codegen Experiment
 Been playing with: [[https://github.com/deepmap/oapi-codegen/blob/master/examples/petstore-expanded/README.md][Github: deepmap/oapi-codegen/
