@@ -37,9 +37,25 @@ jobs:
         uses: airslate-oss/setup-specmatic@v1
         with:
           specmatic-version: 0.72.0
+      - name: Run Specmatic Gherkin tests
+        working-directory: ./use_openapi_generated_server
+        run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded.spec
+      - name: Kill server
+        run: pkill use_openapi_generated_server
+      - name: Publish contract test report
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: '**/contract-test-reports/TEST-*.xml'
+
+      - name: Run program (and keep running)
+        run: go run . &
+        working-directory: ./use_openapi_generated_server
       - name: Run Specmatic contract as test
         working-directory: ./use_openapi_generated_server
         run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
+      - name: Kill server
+        run: pkill use_openapi_generated_server
       - name: Publish contract test report
         uses: mikepenz/action-junit-report@v3
         if: always()
@@ -61,9 +77,25 @@ jobs:
         uses: airslate-oss/setup-specmatic@v1
         with:
           specmatic-version: 0.72.0
+      - name: Run Specmatic Gherkin tests
+        working-directory: ./use_openapi_generated_server
+        run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded.spec
+      - name: Kill server
+        run: docker stop petstore
+      - name: Publish contract test report
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: '**/contract-test-reports/TEST-*.xml'
+
+      - name: Docker Run detached
+        run: make ci-run-docker
+        working-directory: ./use_openapi_generated_server
       - name: Run Specmatic contract as test
         working-directory: ./use_openapi_generated_server
         run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
+      - name: Kill server
+        run: docker stop petstore
       - name: Publish contract test report
         uses: mikepenz/action-junit-report@v3
         if: always()
