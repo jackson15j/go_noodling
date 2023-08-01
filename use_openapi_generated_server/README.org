@@ -1,0 +1,80 @@
+[[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server.yaml/badge.svg][Use OpenAPI Generated Server]], [[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server-docker.yaml/badge.svg][Docker: Use OpenAPI Generated Server]]
+
+* OpenAPI Codegen Experiment
+Been playing with: [[https://github.com/deepmap/oapi-codegen/blob/master/examples/petstore-expanded/README.md][Github: deepmap/oapi-codegen/
+~examples/petstore-expanded/README.md~]].  The =oapi-codegen= seems to be
+pretty smooth to work with.
+
+- You can define where to generate sections of your YAML eg.
+  =/api/server.cfg.yaml= and =/api/models.cfg.yaml=. The default is to generate
+  Client/Server/Docs/Models all in one long file.
+- You create your [[https://github.com/deepmap/oapi-codegen/blob/master/examples/petstore-expanded/echo/api/petstore.go][implementation]] based off the generated models and by
+  referencing the function names of the generated server.
+- =go generate ./...= will generate the =<server|models>.gen.go= files in the
+  expected folders, based on =*cfg.yaml= files (folders must be created
+  beforehand + =// go generate...= lines in the implementation files).
+- Then routing/spinning up of the server is done in your [[https://github.com/deepmap/oapi-codegen/blob/master/examples/petstore-expanded/echo/petstore.go][main]] file.
+
+I did a little play where:
+
+- I got the code working in my repo.
+- [[https://github.com/jackson15j/go_noodling/commit/d7b168d0831de4198f4572d6122c43e0ad13c733][Checked specmatic version]].
+- [[https://github.com/jackson15j/go_noodling/commit/73dcd020aa1dc367b64bde9e6ec3c7eab00e3ab7][Made a non-backwards compatible change]].
+- [[https://github.com/jackson15j/go_noodling/commit/faff1f0b1e334f046a400c064694f7c2457af517][Regenerated from V2 spec]].
+- [[https://github.com/jackson15j/go_noodling/commit/85edba229d88ba2665a85defcfbcca2702e1d4b5][Updated implementation]].
+- Tested the running App Server with [[https://specmatic.in/documentation.html][Specmatic]].
+- Added CI that runs [[https://specmatic.in/documentation.html][Specmatic]] tests against the App Server, with JUnit
+  Reporting.
+
+Overall, I think this can fly!
+
+* Testing:
+** Server:
+To test/TDD with [[https://specmatic.in/documentation.html][Specmatic]] ([[https://specmatic.in/documentation/contract_tests.html][Specmatic Docs: Contract Tests]]):
+
+- Run the Server Application/Container (see: [[file:Makefile][=Makefile=]] for targets).
+
+- In another window run [[https://specmatic.in/documentation.html][Specmatic]] =test= with the chosen OpenAPI spec. eg.
+  #+begin_src shell
+  java -jar /path/to/specmatic.jar test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
+  #+end_src
+
+* Development:
+** Generate Spec from a live Service:
+To use [[https://specmatic.in/documentation.html][Specmatic]] to generate both an OpenAPI spec + stub Client example JSON
+smart mocks (See: [[https://specmatic.in/documentation/authoring_contracts.html][Specmatic Docs: Generating API Specifications]]):
+
+- Run [[https://specmatic.in/documentation.html][Specmatic]] =proxy= with a target folder.
+  #+begin_src shell
+  java -jar /path/to/specmatic.jar proxy --target <target_url> <output_dir>
+  #+end_src
+- Make API requests to: =http://localhost:9000=.
+- =C-c= to stop & save generated OpenAPI spec + Client example stubs.
+
+Run [[https://specmatic.in/documentation.html][Specmatic]] =stub= with generated OpenAPI spec to do Client Development +
+validate generation. - *NOTE:* I had seen a generated spec with a missing
+=Content-Length= header in the Response section, but was present in Request +
+generated Client stub data. Adding fixed the warning during a =specmatic stub=
+run. - *NOTE:* If keys are non-unique between requests/responses, then the
+generator will merge them all into the same component!!
+
+** Client:
+To use [[https://specmatic.in/documentation.html][Specmatic]] to stub up a Server for Client Development ([[https://specmatic.in/documentation/service_virtualization_tutorial.html][Specmatic Docs:
+Service Virtualisation]]):
+
+- Run [[https://specmatic.in/documentation.html][Specmatic]] =stub= with the chosen OpenAPI spec. eg.
+  #+begin_src shell
+  java -jar /path/to/specmatic.jar stub --port 8085 clients/service1/openapi3_1_v2.yaml
+  #+end_src
+
+** Compare Specs:
+To use [[https://specmatic.in/documentation.html][Specmatic]] to do backwards compatibility checks between specs (See:
+[[https://specmatic.in/documentation/backward_compatibility.html][Specmatic Docs: Backward Compatibility]]). eg.
+
+- Diff files: =java -jar specmatic.jar compare <spec_vX.yaml> <spec_vY.yaml>=.
+
+Working with changes in-line:
+
+- Git: =java -jar specmatic.jar compatible git file <spec.yaml>= eg. in:
+  =.git/hooks/pre-commit=.
+- CI: =java -jar specmatic.jar compatible git commits <spec.yaml> HEAD HEAD^1=.
