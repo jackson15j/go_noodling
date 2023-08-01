@@ -6,17 +6,17 @@
 package main
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	// "io/ioutil"
 	"os"
 
 	"go_noodling/use_openapi_generated_server/api"
 	// "github.com/deepmap/oapi-codegen/pkg/middleware"
 	"github.com/labstack/echo/v4"
 	// echomiddleware "github.com/labstack/echo/v4/middleware"
-	"go_noodling/use_openapi_generated_server/clients/service1"
+	// "go_noodling/use_openapi_generated_server/clients/service1"
 )
 
 func main() {
@@ -47,45 +47,46 @@ func main() {
 	// We now register our petStore above as the handler for the interface
 	api.RegisterHandlers(e, petStore)
 
-	// TODO:
-	//
-	// - Understand how to use Generated Client code.
-	// - Move out of `main.go`.
-	req, err := service1.NewHealthReadRequest("http://localhost:8085")
-	client, err := service1.NewClient("http://localhost:8085")
-	fmt.Println(err)
-	resp, err := client.Client.Do(req)
-	// https://pkg.go.dev/net/http@go1.20.6#Client.Do
-	defer resp.Body.Close()
-	fmt.Println(resp)
-	fmt.Println(resp.Body)
-	body, err := ioutil.ReadAll(resp.Body)
-	// https://stackoverflow.com/questions/64610203/golang-read-https-response-body
-	// Prints character codes.
-	fmt.Println(body, err)
-	// https://stackoverflow.com/questions/40632802/how-to-convert-byte-array-to-string-in-go
-	// Prints expected JSON messagge.
-	fmt.Println(string(body))
-	// https://pkg.go.dev/encoding/json
-	// No result. Guessing this is from the above `ioutil.ReadAll()`?
-	var health service1.HealthReadResponse
-	err = json.Unmarshal(body, &health)
-	fmt.Println(err)
-	fmt.Println(health)
-	var b []byte
-	i, err := resp.Body.Read(b)
-	fmt.Println(i, err)
-	fmt.Println(b)
-	// fmt.Println(client.HealthRead())
-	fmt.Println("--- Requests:")
-	fmt.Println(req)
-	// fmt.Println(req.GetBody())
-	fmt.Println(req.RequestURI)
-	fmt.Println(req.URL)
-	fmt.Println(req.Body)
-	fmt.Println(req.Response)
-	// fmt.Println(req.Response.Body)
-	fmt.Println(err)
+	// // TODO:
+	// //
+	// // - Understand how to use Generated Client code.
+	// // - Move out of `main.go`.
+	// req, err := service1.NewHealthReadRequest("http://localhost:8085")
+	// client, err := service1.NewClient("http://localhost:8085")
+	// fmt.Println(err)
+	// resp, err := client.Client.Do(req)
+	// fmt.Println(err)
+	// // https://pkg.go.dev/net/http@go1.20.6#Client.Do
+	// defer resp.Body.Close()
+	// fmt.Println(resp)
+	// fmt.Println(resp.Body)
+	// body, err := ioutil.ReadAll(resp.Body)
+	// // https://stackoverflow.com/questions/64610203/golang-read-https-response-body
+	// // Prints character codes.
+	// fmt.Println(body, err)
+	// // https://stackoverflow.com/questions/40632802/how-to-convert-byte-array-to-string-in-go
+	// // Prints expected JSON messagge.
+	// fmt.Println(string(body))
+	// // https://pkg.go.dev/encoding/json
+	// // No result. Guessing this is from the above `ioutil.ReadAll()`?
+	// var health service1.HealthReadResponse
+	// err = json.Unmarshal(body, &health)
+	// fmt.Println(err)
+	// fmt.Println(health)
+	// var b []byte
+	// i, err := resp.Body.Read(b)
+	// fmt.Println(i, err)
+	// fmt.Println(b)
+	// // fmt.Println(client.HealthRead())
+	// fmt.Println("--- Requests:")
+	// fmt.Println(req)
+	// // fmt.Println(req.GetBody())
+	// fmt.Println(req.RequestURI)
+	// fmt.Println(req.URL)
+	// fmt.Println(req.Body)
+	// fmt.Println(req.Response)
+	// // fmt.Println(req.Response.Body)
+	// fmt.Println(err)
 	// And we serve HTTP until the world ends.
 	e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%d", *port)))
 }
