@@ -1,5 +1,4 @@
 [[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server.yaml][file:https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server.yaml/badge.svg]]
-[[https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server-docker.yaml][file:https://github.com/jackson15j/go_noodling/actions/workflows/use_openapi_generated_server-docker.yaml/badge.svg]]
 
 * OpenAPI Codegen Experiment
 Been playing with: [[https://github.com/deepmap/oapi-codegen/blob/master/examples/petstore-expanded/README.md][Github: deepmap/oapi-codegen/
@@ -36,7 +35,7 @@ To test/TDD with [[https://specmatic.in/documentation.html][Specmatic]] ([[https
 - Run the Server Application/Container (see: [[file:Makefile][=Makefile=]] for targets).
 
 - In another window run [[https://specmatic.in/documentation.html][Specmatic]] =test= from:
-  - =examples, in the chosen OpenAPI spec. eg.
+  - =examples=, in the chosen OpenAPI spec. eg.
     #+begin_src shell
       java -jar /path/to/specmatic.jar test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
     #+end_src
