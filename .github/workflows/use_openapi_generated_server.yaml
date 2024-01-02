@@ -36,7 +36,10 @@ jobs:
       - name: Setup specmatic
         uses: airslate-oss/setup-specmatic@v1
         with:
-          specmatic-version: 1.2.2
+          # See:
+          # https://github.com/airslate-oss/setup-specmatic/issues/259,
+          # for sub-1.1.0 version pinning!
+          specmatic-version: 1.0.4
       - name: Run Specmatic Gherkin tests
         working-directory: ./use_openapi_generated_server
         run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded.spec
@@ -76,7 +79,7 @@ jobs:
       - name: Setup specmatic
         uses: airslate-oss/setup-specmatic@v1
         with:
-          specmatic-version: 1.2.2
+          specmatic-version: 1.0.4
       - name: Run Specmatic Gherkin tests
         working-directory: ./use_openapi_generated_server
         run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded.spec
