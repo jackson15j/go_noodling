@@ -69,6 +69,9 @@ func (p *PetStore) FindPets(ctx echo.Context, params models.FindPetsParams) erro
 			// Add all pets if we're not filtering
 			result = append(result, pet)
 		}
+		// TODO: Need to either add a failure for unknown tags to
+		// return `null`, or update the example in the spec to return
+		// a list as if no filtering was provided!
 
 		if params.Limit != nil {
 			l := int(*params.Limit)
