@@ -25,4 +25,4 @@ go.work
 .env
 /use_openapi_generated_server/use_openapi_generated_server
 **/contract-test-reports/**
-*bin/
+*/bin/
