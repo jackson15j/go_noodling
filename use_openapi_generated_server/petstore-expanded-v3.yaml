@@ -66,7 +66,7 @@ paths:
                 FETCH_PET_MULTIPLE_TAGS_SUCCESS:
                   $ref: '#/components/examples/PetResponse'
                 FETCH_PET_UNKNOWN_TAGS_SUCCESS:
-                  value: null
+                  value: {}
         default:
           description: unexpected error
           content:
