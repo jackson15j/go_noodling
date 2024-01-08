@@ -12,6 +12,10 @@ RUN go generate ./...
 RUN go build -v -o /usr/local/bin/app .
 
 
+FROM build as test
+RUN go test -cover ./...
+
+
 FROM scratch as app
 COPY --from=build /usr/local/bin/app /bin/
 # See: `use_openapi_generated_server/main.go::20`
