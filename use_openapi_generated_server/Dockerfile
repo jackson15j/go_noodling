@@ -8,6 +8,7 @@ COPY . .
 
 
 FROM base AS build
+RUN go generate ./...
 RUN go build -v -o /usr/local/bin/app .
 
 
