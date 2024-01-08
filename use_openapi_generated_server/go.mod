@@ -1,6 +1,6 @@
 module go_noodling/use_openapi_generated_server
 
-go 1.20
+go 1.21
 
 require (
 	github.com/deepmap/oapi-codegen v1.13.0

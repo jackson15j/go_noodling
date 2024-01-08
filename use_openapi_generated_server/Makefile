@@ -30,7 +30,10 @@ tidy:
 	go mod tidy
 
 build-docker:
-	docker build --progress=plain -t use-openapi-generated-server .
+	docker build --progress=plain -t use-openapi-generated-server --target=app .
+
+test-docker:
+	docker build --progress=plain -t use-openapi-generated-server-testp --target=test .
 
 run-docker: build-docker
 	docker run -p 8083:8083 --rm --name petstore use-openapi-generated-server
