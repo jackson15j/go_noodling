@@ -36,7 +36,7 @@ test-docker:
 	docker build --progress=plain -t use-openapi-generated-server-testp --target=test .
 
 run-docker: build-docker
-	docker run -p 8083:8083 --rm --name petstore use-openapi-generated-server
+	docker run -p 8087:8087 --rm --name petstore use-openapi-generated-server
 
 ci-run-docker: build-docker
-	docker run -d -p 8083:8083 --rm --name petstore use-openapi-generated-server
+	docker run -d -p 8087:8087 --rm --name petstore use-openapi-generated-server

@@ -19,5 +19,5 @@ RUN go test -cover ./...
 FROM scratch AS app
 COPY --from=build /usr/local/bin/app /bin/
 # See: `use_openapi_generated_server/main.go::20`
-EXPOSE 8083
+EXPOSE 8087
 CMD ["/bin/app"]

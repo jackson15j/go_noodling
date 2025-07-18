@@ -39,7 +39,7 @@ jobs:
           specmatic-version: 0.72.0
       - name: Run Specmatic Gherkin tests
         working-directory: ./use_openapi_generated_server
-        run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded.spec
+        run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded.spec
       - name: Kill server
         run: pkill use_openapi_generated_server
       - name: Publish contract test report
@@ -53,7 +53,7 @@ jobs:
         working-directory: ./use_openapi_generated_server
       - name: Run Specmatic contract as test
         working-directory: ./use_openapi_generated_server
-        run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
+        run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
       - name: Kill server
         run: pkill use_openapi_generated_server
       - name: Publish contract test report
@@ -79,7 +79,7 @@ jobs:
           specmatic-version: 0.72.0
       - name: Run Specmatic Gherkin tests
         working-directory: ./use_openapi_generated_server
-        run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded.spec
+        run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded.spec
       - name: Kill server
         run: docker stop petstore
       - name: Publish contract test report
@@ -93,7 +93,7 @@ jobs:
         working-directory: ./use_openapi_generated_server
       - name: Run Specmatic contract as test
         working-directory: ./use_openapi_generated_server
-        run: specmatic test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
+        run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
       - name: Kill server
         run: docker stop petstore
       - name: Publish contract test report

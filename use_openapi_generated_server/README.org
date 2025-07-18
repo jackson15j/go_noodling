@@ -37,11 +37,11 @@ To test/TDD with [[https://specmatic.in/documentation.html][Specmatic]] ([[https
 - In another window run [[https://specmatic.in/documentation.html][Specmatic]] =test= from:
   - =examples=, in the chosen OpenAPI spec. eg.
     #+begin_src shell
-      java -jar /path/to/specmatic.jar test --port 8083 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
+      java -jar /path/to/specmatic.jar test --port 8087 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
     #+end_src
   - Gherkin feature file(s). eg.
     #+begin_src shell
-      java -jar /path/to/specmatic.jar test --port 8083 --junitReportDir contract-test-reports petstore-expanded.spec
+      java -jar /path/to/specmatic.jar test --port 8087 --junitReportDir contract-test-reports petstore-expanded.spec
     #+end_src
 
 * Development:

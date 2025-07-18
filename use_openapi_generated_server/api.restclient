@@ -1,5 +1,5 @@
 # Variables
-:port = 8083
+:port = 8087
 :host = http://localhost::port
 :headers = <<
 Content-Type: application/json
