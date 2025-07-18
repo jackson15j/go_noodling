@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/golang
-FROM golang:1.21-alpine AS base
+FROM golang:1.24-alpine AS base
 WORKDIR /usr/src/app
 # pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
 COPY go.mod go.sum ./
