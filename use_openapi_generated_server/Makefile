@@ -33,10 +33,11 @@ build-docker:
 	docker build --progress=plain -t use-openapi-generated-server --target=app .
 
 test-docker:
-	docker build --progress=plain -t use-openapi-generated-server-testp --target=test .
+	docker compose up app_unittests --force-recreate -V --build
+	docker compose --profile=ct up --force-recreate -V --build --exit-code-from=app_contracttests
 
 run-docker: build-docker
-	docker run -p 8087:8087 --rm --name petstore use-openapi-generated-server
+	docker compose --profile=run up --force-recreate -V --build --exit-code-from=app
 
 ci-run-docker: build-docker
 	docker run -d -p 8087:8087 --rm --name petstore use-openapi-generated-server
