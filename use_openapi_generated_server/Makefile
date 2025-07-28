@@ -30,11 +30,13 @@ tidy:
 	go mod tidy
 
 build-docker:
+    # Emacs terminals throw bake error due to TTY docker bugs.
+    # Plain progress and disabling buildkit works around this.
 	docker build --progress=plain -t use-openapi-generated-server --target=app .
 
 test-docker:
-	docker compose up app_unittests --force-recreate -V --build
-	docker compose --profile=ct up --force-recreate -V --build --exit-code-from=app_contracttests
+	DOCKER_BUILDKIT=0 docker compose up app_unittests --force-recreate -V --build
+	DOCKER_BUILDKIT=0 docker compose --profile=ct up --force-recreate -V --build --exit-code-from=app_contracttests
 
 run-docker: build-docker
 	docker compose --profile=run up --force-recreate -V --build --exit-code-from=app
