@@ -11,14 +11,14 @@ services:
             - bin/
             - LICENSE
             - README.org
-    healthcheck:
-      # TODO: Add a proper healthcheck endpoint that returns 200.
-      # Below returns `404` by default!
-      test: ["CMD", "curl", "http://app:8087/pets"]
-      interval: 5s # 1m30s
-      timeout: 3s
-      retries: 5
-      start_period: 30s
+    # healthcheck:
+    #   # TODO: Add a proper healthcheck endpoint that returns 200.
+    #   # Below returns `404` by default!
+    #   test: ["CMD", "curl", "http://app:8087/pets"]
+    #   interval: 5s # 1m30s
+    #   timeout: 3s
+    #   retries: 5
+    #   start_period: 30s
     ports:
       - 8087:8087
     restart: unless-stopped
