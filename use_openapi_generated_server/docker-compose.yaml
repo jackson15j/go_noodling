@@ -41,6 +41,18 @@ services:
 
 
   ### API Contract Boundary tests - `docker compose <options> up app_contracttests`. ###
+  validate_contract:
+    # Fix cast error in contract.
+    container_name: use-openapi-generated-server-validate-contract
+    image: specmatic/specmatic:latest
+    networks:
+      - go_noodling
+    profiles:
+      - vt
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded-v3.yaml:/specs/api-spec.yaml
+    command: examples validate --specs-dir=/specs
+
   app_contracttests:
     # Fix cast error in contract.
     container_name: use-openapi-generated-server-contracttests
