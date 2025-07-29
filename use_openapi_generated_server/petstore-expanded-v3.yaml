@@ -38,9 +38,9 @@ paths:
             items:
               type: string
           examples:
-            "[WIP] FETCH_PET_TAGS_SUCCESS":
-              value:
-                - dog
+            # "[WIP] FETCH_PET_TAGS_SUCCESS":
+            #   value:
+            #     - dog
             "[WIP] FETCH_PET_MULTIPLE_TAGS_SUCCESS":
               value:
                 - dog
@@ -65,8 +65,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Pet'
               examples:
-                "[WIP] FETCH_PET_TAGS_SUCCESS":
-                  $ref: '#/components/examples/PetResponseArray'
+                # "[WIP] FETCH_PET_TAGS_SUCCESS":
+                #   $ref: '#/components/examples/PetResponseArray'
                 "[WIP] FETCH_PET_MULTIPLE_TAGS_SUCCESS":
                   $ref: '#/components/examples/PetResponseArray'
                 # TODO: Fix null response handling.
