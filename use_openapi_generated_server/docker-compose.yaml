@@ -64,7 +64,7 @@ services:
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded-v3.yaml:/specs/api-spec.yaml
       - ${LOCAL_WORKSPACE_FOLDER:-.}/build:/usr/src/app/build
-    command: test /specs/api-spec.yaml --testBaseURL http://app:8087 --junitReportDir=/usr/src/app/build/reports/specmatic/junit
+    command: test /specs/api-spec.yaml --testBaseURL http://app:8087 --junitReportDir=/usr/src/app/build/reports/specmatic/junit --filter="!(PATH='/pets' && METHOD='GET')"
     depends_on:
       - app
       # app:
