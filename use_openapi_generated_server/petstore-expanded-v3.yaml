@@ -39,11 +39,15 @@ paths:
               type: string
           examples:
             FETCH_PET_TAGS_SUCCESS:
-              value: dog
+              value:
+                - dog
             FETCH_PET_MULTIPLE_TAGS_SUCCESS:
-              value: dog,cat
+              value:
+                - dog
+                - cat
             FETCH_PET_UNKNOWN_TAGS_SUCCESS:
-              value: unknown
+              value:
+                - unknown
         - name: limit
           in: query
           description: maximum number of results to return
