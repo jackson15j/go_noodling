@@ -81,5 +81,5 @@ jobs:
         uses: mikepenz/action-junit-report@v5
         if: always()
         with:
-          report_paths: 'build/reports/specmatic/junit/TEST-*.xml'
+          report_paths: '**/build/reports/specmatic/junit/TEST-*.xml'
 
