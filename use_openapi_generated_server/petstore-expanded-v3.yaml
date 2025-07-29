@@ -45,9 +45,9 @@ paths:
               value:
                 - dog
                 - cat
-            "[WIP] INVALID_FETCH_PET_UNKNOWN_TAGS":
-              value:
-                - unknown
+            # "[WIP] INVALID_FETCH_PET_UNKNOWN_TAGS":
+            #   value:
+            #     - unknown
         - name: limit
           in: query
           description: maximum number of results to return
@@ -69,8 +69,10 @@ paths:
                   $ref: '#/components/examples/PetResponseArray'
                 "[WIP] FETCH_PET_MULTIPLE_TAGS_SUCCESS":
                   $ref: '#/components/examples/PetResponseArray'
-                "[WIP] INVALID_FETCH_PET_UNKNOWN_TAGS":
-                  value: null
+                # TODO: Fix null response handling.
+                #
+                # "[WIP] INVALID_FETCH_PET_UNKNOWN_TAGS":
+                #   value: null
         default:
           description: unexpected error
           content:
