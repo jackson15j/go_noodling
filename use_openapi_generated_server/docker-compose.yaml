@@ -71,14 +71,16 @@ services:
       #   condition: service_healthy
 
   app_bdd_tests:
-    container_name: use-openapi-generated-server-contracttests
+    container_name: use-openapi-generated-server-bddtests
     image: specmatic/specmatic:latest
     networks:
       - go_noodling
     profiles:
       - bt
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded-v3.spec:/specs/api-spec.spec
+      # API file must match the name listed inside the spec file!!
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded-v3.yaml:/specs/petstore-expanded-v3.yaml
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded.spec:/specs/api-spec.spec
       - ${LOCAL_WORKSPACE_FOLDER:-.}/build:/usr/src/app/build
     command: test /specs/api-spec.spec --testBaseURL http://app:8087 --junitReportDir=/usr/src/app/build/reports/specmatic/junit
     depends_on:

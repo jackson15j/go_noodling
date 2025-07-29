@@ -43,7 +43,10 @@ validatecontract-docker:
 contracttest-docker: validatecontract-docker
 	DOCKER_BUILDKIT=0 docker compose --profile=ct up --force-recreate -V --build --exit-code-from=app_contracttests || exit $$?
 
-test-docker: unittest-docker contracttest-docker
+bddtest-docker: validatecontract-docker
+	DOCKER_BUILDKIT=0 docker compose --profile=bt up --force-recreate -V --build --exit-code-from=app_bdd_tests || exit $$?
+
+test-docker: unittest-docker contracttest-docker bddtest-docker
 
 run-docker: build-docker
 	docker compose --profile=run up --force-recreate -V --build --exit-code-from=app
