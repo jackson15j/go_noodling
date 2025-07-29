@@ -13,7 +13,7 @@ RUN go build -v -o /usr/local/bin/app .
 
 
 FROM build AS test
-RUN go test -cover ./...
+RUN go test -v -cover ./...
 
 
 FROM scratch AS app
