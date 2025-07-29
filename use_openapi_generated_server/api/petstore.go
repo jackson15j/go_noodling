@@ -61,6 +61,9 @@ func (p *PetStore) FindPets(ctx echo.Context, params models.FindPetsParams) erro
 	for _, pet := range p.Pets {
 		if params.Tags != nil {
 			// If we have tags,  filter pets by tag
+			//
+			// TODO: This tags filtering is broken, so getting `null`
+			// back instead!
 			for _, t := range *params.Tags {
 				if &pet.Tag != nil && (&pet.Tag == &t) {
 					result = append(result, pet)
