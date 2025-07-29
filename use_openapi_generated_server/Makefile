@@ -34,9 +34,16 @@ build-docker:
     # Plain progress and disabling buildkit works around this.
 	docker build --progress=plain -t use-openapi-generated-server --target=app .
 
-test-docker:
-	DOCKER_BUILDKIT=0 docker compose up app_unittests --force-recreate -V --build
-	DOCKER_BUILDKIT=0 docker compose --profile=ct up --force-recreate -V --build --exit-code-from=app_contracttests
+unittest-docker:
+	DOCKER_BUILDKIT=0 docker compose up app_unittests --force-recreate -V --build || exit $$?
+
+validatecontract-docker:
+	DOCKER_BUILDKIT=0 docker compose up --force-recreate -V validate_contract || exit $$?
+
+contracttest-docker: validatecontract-docker
+	DOCKER_BUILDKIT=0 docker compose --profile=ct up --force-recreate -V --build --exit-code-from=app_contracttests || exit $$?
+
+test-docker: unittest-docker contracttest-docker
 
 run-docker: build-docker
 	docker compose --profile=run up --force-recreate -V --build --exit-code-from=app
