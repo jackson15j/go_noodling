@@ -82,4 +82,5 @@ jobs:
         if: always()
         with:
           report_paths: '**/build/reports/specmatic/junit/TEST-*.xml'
+          include_passed: true
 
