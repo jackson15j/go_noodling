@@ -23,11 +23,11 @@ Feature: Petstore Extended API
     Then status 404
 
   Scenario Outline: Delete Pet Success (Will fail if Server is not reset between test runs!!)
-    When DELETE /pets/(id:number)
+    When DELETE /pets/(id:string)
     Then status 204
     Examples:
-      |   id | name | tag |
-      | 1000 | Rex  | dog |
+      |   id |
+      | 1000 |
 
   Scenario Outline: Delete Pet Not Found Error
     When DELETE /pets/5
