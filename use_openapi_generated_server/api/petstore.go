@@ -20,6 +20,7 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"sync"
 
 	"github.com/labstack/echo/v4"
@@ -60,6 +61,9 @@ func (p *PetStore) FindPets(ctx echo.Context, params models.FindPetsParams) erro
 	for _, pet := range p.Pets {
 		if params.Tags != nil {
 			// If we have tags,  filter pets by tag
+			//
+			// TODO: This tags filtering is broken, so getting `null`
+			// back instead!
 			for _, t := range *params.Tags {
 				if &pet.Tag != nil && (&pet.Tag == &t) {
 					result = append(result, pet)
@@ -132,7 +136,12 @@ func (p *PetStore) FindPetById(ctx echo.Context, petId int64) error {
 	return ctx.JSON(http.StatusOK, pet)
 }
 
-func (p *PetStore) DeletePet(ctx echo.Context, id int64) error {
+func (p *PetStore) DeletePet(ctx echo.Context, id_str string) error {
+	id, err := strconv.ParseInt(id_str, 10, 64)
+	if err != nil {
+		return sendPetStoreError(ctx, http.StatusNotFound,
+			fmt.Sprintf("Could not find pet with ID %s. Not: int64 convertible", id_str))
+	}
 	p.Lock.Lock()
 	defer p.Lock.Unlock()
 

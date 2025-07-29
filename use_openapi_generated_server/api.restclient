@@ -12,6 +12,12 @@ GET :host/pets
 # - 200 with data.
 # - 404 "Could not find pet with ID 1001", when missing.
 GET :host/pets/1000
+# GET by tags: dog, only
+GET :host/pets?tags=dog
+# GET by tags: dog, only
+GET :host/pets?tags=dog,cat
+# GET by tags: dog, only
+GET :host/pets?tags=unknown
 
 # POST
 # - 201 Created. Returns Data JSON + `"id": <int>`. ID starts from `1000`.
@@ -20,7 +26,7 @@ GET :host/pets/1000
 # - `400`, `Invalid format for NewPet` if bad request, due to missing `Content-Type`.
 POST :host/pets
 :headers
-{"name": "Rex"}
+{"name": "Rex", "tag": "dog"}
 # {"name": "Bob", "tag": "cat"}
 
 # DELETE

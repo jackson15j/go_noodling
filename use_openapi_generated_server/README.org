@@ -30,7 +30,7 @@ Overall, I think this can fly!
 
 * Testing:
 ** Server:
-To test/TDD with [[https://specmatic.in/documentation.html][Specmatic]] ([[https://specmatic.in/documentation/contract_tests.html][Specmatic Docs: Contract Tests]]):
+To TDD with [[https://specmatic.in/documentation.html][Specmatic]] ([[https://specmatic.in/documentation/contract_tests.html][Specmatic Docs: Contract Tests]]):
 
 - Run the Server Application/Container (see: [[file:Makefile][=Makefile=]] for targets).
 
@@ -43,6 +43,8 @@ To test/TDD with [[https://specmatic.in/documentation.html][Specmatic]] ([[https
     #+begin_src shell
       java -jar /path/to/specmatic.jar test --port 8087 --junitReportDir contract-test-reports petstore-expanded.spec
     #+end_src
+
+To Test: =make test-docker= runs unit/contract tests.
 
 * Development:
 ** Generate Spec from a live Service:

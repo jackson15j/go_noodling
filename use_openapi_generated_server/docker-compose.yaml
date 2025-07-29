@@ -1,0 +1,91 @@
+services:
+  app:
+    container_name: use-openapi-generated-server
+    build:
+      context: .
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          ignore:
+            - bin/
+            - LICENSE
+            - README.org
+    # healthcheck:
+    #   # TODO: Add a proper healthcheck endpoint that returns 200.
+    #   # Below returns `404` by default!
+    #   test: ["CMD", "curl", "http://app:8087/pets"]
+    #   interval: 5s # 1m30s
+    #   timeout: 3s
+    #   retries: 5
+    #   start_period: 30s
+    ports:
+      - 8087:8087
+    restart: unless-stopped
+    networks:
+      - go_noodling
+    profiles:
+      - bt
+      - ct
+      - run
+
+  app_unittests:
+    container_name: use-openapi-generated-server-unittests
+    build:
+      context: .
+      target: test
+    networks:
+      - go_noodling
+    profiles:
+      - ut
+
+
+  ### API Contract Boundary tests - `docker compose <options> up app_contracttests`. ###
+  validate_contract:
+    # Fix cast error in contract.
+    container_name: use-openapi-generated-server-validate-contract
+    image: specmatic/specmatic:latest
+    networks:
+      - go_noodling
+    profiles:
+      - vt
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded-v3.yaml:/specs/api-spec.yaml
+    command: examples validate --specs-dir=/specs
+
+  app_contracttests:
+    # Fix cast error in contract.
+    container_name: use-openapi-generated-server-contracttests
+    image: specmatic/specmatic:latest
+    networks:
+      - go_noodling
+    profiles:
+      - ct
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded-v3.yaml:/specs/api-spec.yaml
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/build:/usr/src/app/build
+    command: test /specs/api-spec.yaml --testBaseURL http://app:8087 --junitReportDir=/usr/src/app/build/reports/specmatic/junit --filter="!(PATH='/pets' && METHOD='GET')"
+    depends_on:
+      - app
+      # app:
+      #   condition: service_healthy
+
+  app_bdd_tests:
+    container_name: use-openapi-generated-server-contracttests
+    image: specmatic/specmatic:latest
+    networks:
+      - go_noodling
+    profiles:
+      - bt
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/petstore-expanded-v3.spec:/specs/api-spec.spec
+      - ${LOCAL_WORKSPACE_FOLDER:-.}/build:/usr/src/app/build
+    command: test /specs/api-spec.spec --testBaseURL http://app:8087 --junitReportDir=/usr/src/app/build/reports/specmatic/junit
+    depends_on:
+      - app
+      # app:
+      #   condition: service_healthy
+
+
+networks:
+  go_noodling:

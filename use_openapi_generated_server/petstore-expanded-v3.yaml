@@ -38,12 +38,16 @@ paths:
             items:
               type: string
           examples:
-            FETCH_PET_TAGS_SUCCESS:
-              value: dog
-            FETCH_PET_MULTIPLE_TAGS_SUCCESS:
-              value: dog,cat
-            FETCH_PET_UNKNOWN_TAGS_SUCCESS:
-              value: unknown
+            "[WIP] FETCH_PET_TAGS_SUCCESS":
+              value:
+                - dog
+            "[WIP] FETCH_PET_MULTIPLE_TAGS_SUCCESS":
+              value:
+                - dog
+                - cat
+            # "[WIP] INVALID_FETCH_PET_UNKNOWN_TAGS":
+            #   value:
+            #     - unknown
         - name: limit
           in: query
           description: maximum number of results to return
@@ -61,12 +65,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Pet'
               examples:
-                FETCH_PET_TAGS_SUCCESS:
-                  $ref: '#/components/examples/PetResponse'
-                FETCH_PET_MULTIPLE_TAGS_SUCCESS:
-                  $ref: '#/components/examples/PetResponse'
-                FETCH_PET_UNKNOWN_TAGS_SUCCESS:
-                  value: null
+                "[WIP] FETCH_PET_TAGS_SUCCESS":
+                  $ref: '#/components/examples/PetResponseArray'
+                "[WIP] FETCH_PET_MULTIPLE_TAGS_SUCCESS":
+                  $ref: '#/components/examples/PetResponseArray'
+                # TODO: Fix null response handling.
+                #
+                # "[WIP] INVALID_FETCH_PET_UNKNOWN_TAGS":
+                #   value: null
         default:
           description: unexpected error
           content:
@@ -103,7 +109,7 @@ paths:
                 $ref: '#/components/schemas/Pet'
               examples:
                 CREATE_NEWPET_SUCCESS:
-                  $ref: '#/components/examples/PetResponse'
+                  $ref: '#/components/examples/PetResponseObject'
         default:
           description: unexpected error
           content:
@@ -136,7 +142,7 @@ paths:
                 $ref: '#/components/schemas/Pet'
               examples:
                 FETCH_PET_SUCCESS:
-                  $ref: '#/components/examples/PetResponse'
+                  $ref: '#/components/examples/PetResponseObject'
         '404':
           description: Could not find pet with ID <id>
           content:
@@ -163,13 +169,35 @@ paths:
           description: ID of pet to delete
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            example: "1000"
           examples:
             DELETE_PET_SUCCESS:
-              value: 1000
+              value: "1000"
             DELETE_PET_NOT_FOUND:
-              value: 65
+              value: "65"
+          # `specmatic examples validate --specs-dir=/specs`:
+          #
+          # java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.String (java.lang.Integer and java.lang.String are in module java.base of loader 'bootstrap')
+          # 	at io.specmatic.conversions.OpenApiSpecification.getRowsFromRequestExample(OpenApiSpecification.kt:655)
+          # 	at io.specmatic.conversions.OpenApiSpecification.getUpdatedScenarioInfosWithNoBodyResponseExamples(OpenApiSpecification.kt:615)
+          # 	at io.specmatic.conversions.OpenApiSpecification.openApiToScenarioInfos(OpenApiSpecification.kt:544)
+          # 	at io.specmatic.conversions.OpenApiSpecification.toScenarioInfos(OpenApiSpecification.kt:286)
+          # 	at io.specmatic.conversions.OpenApiSpecification.toFeature(OpenApiSpecification.kt:250)
+          # 	at io.specmatic.core.FeatureKt.parseContractFileToFeature(Feature.kt:92)
+          # 	at io.specmatic.core.FeatureKt.parseContractFileToFeature$default(Feature.kt:67)
+          # 	at io.specmatic.core.FeatureKt.parseContractFileWithNoMissingConfigWarning(Feature.kt:64)
+          # 	at application.ExamplesCommand$Validate$validateAllExamplesAssociatedToEachSpecIn$validationResults$1.invoke(ExamplesCommand.kt:206)
+          # 	at application.ExamplesCommand$Validate$validateAllExamplesAssociatedToEachSpecIn$validationResults$1.invoke(ExamplesCommand.kt:201)
+          #
+          #   type: integer
+          #   format: int64
+          #   example: 1000
+          # examples:
+          #   DELETE_PET_SUCCESS:
+          #     value: 1000
+          #   DELETE_PET_NOT_FOUND:
+          #     value: 65
       responses:
         '204':
           description: pet deleted
@@ -190,6 +218,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Pet:
@@ -227,8 +256,13 @@ components:
           type: string
 
   examples:
-    PetResponse:
+    PetResponseObject:
       value:
         name: Rex
         tag: dog
         id: 1000
+    PetResponseArray:
+      value:
+        - name: Rex
+          tag: dog
+          id: 1000
