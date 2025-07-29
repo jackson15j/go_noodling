@@ -71,34 +71,15 @@ jobs:
       - name: Docker Build
         run: make build-docker
         working-directory: ./use_openapi_generated_server
-      - name: Docker Run detached
-        run: make ci-run-docker
+      - name: Docker run unittests
+        run: make unittest-docker
         working-directory: ./use_openapi_generated_server
-      - name: Setup specmatic
-        uses: airslate-oss/setup-specmatic@v1
-        with:
-          specmatic-version: 0.72.0
-      - name: Run Specmatic Gherkin tests
+      - name: Docker run contract tests
+        run: make contracttest-docker
         working-directory: ./use_openapi_generated_server
-        run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded.spec
-      - name: Kill server
-        run: docker stop petstore
       - name: Publish contract test report
         uses: mikepenz/action-junit-report@v5
         if: always()
         with:
-          report_paths: '**/contract-test-reports/TEST-*.xml'
+          report_paths: 'build/reports/specmatic/junit/TEST-*.xml'
 
-      - name: Docker Run detached
-        run: make ci-run-docker
-        working-directory: ./use_openapi_generated_server
-      - name: Run Specmatic contract as test
-        working-directory: ./use_openapi_generated_server
-        run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
-      - name: Kill server
-        run: docker stop petstore
-      - name: Publish contract test report
-        uses: mikepenz/action-junit-report@v3
-        if: always()
-        with:
-          report_paths: '**/contract-test-reports/TEST-*.xml'
