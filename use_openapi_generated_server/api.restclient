@@ -16,6 +16,8 @@ GET :host/pets/1000
 GET :host/pets?tags=dog
 # GET by tags: dog, only
 GET :host/pets?tags=dog,cat
+# GET by tags: dog, only
+GET :host/pets?tags=unknown
 
 # POST
 # - 201 Created. Returns Data JSON + `"id": <int>`. ID starts from `1000`.
