@@ -8,7 +8,7 @@ on:
   push:
     paths:
       - 'use_openapi_generated_server/**'
-      - '.github/workflows'
+      - '.github/workflows/**'
 
 permissions:
   # https://github.com/mikepenz/action-junit-report#pr-run-permissions
