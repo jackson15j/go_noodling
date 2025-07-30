@@ -42,7 +42,7 @@ jobs:
         working-directory: ./use_openapi_generated_server
         run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded.spec
       - name: Kill server
-        run: pkill use_openapi_generated_server
+        run: pkill -f use_openapi_generated_server
       - name: Publish contract test report
         uses: mikepenz/action-junit-report@v5
         if: always()
@@ -56,7 +56,7 @@ jobs:
         working-directory: ./use_openapi_generated_server
         run: specmatic test --port 8087 --junitReportDir contract-test-reports petstore-expanded-v3.yaml
       - name: Kill server
-        run: pkill use_openapi_generated_server
+        run: pkill -f use_openapi_generated_server
       - name: Publish contract test report
         uses: mikepenz/action-junit-report@v5
         if: always()
