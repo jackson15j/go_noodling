@@ -48,6 +48,9 @@ bddtest-docker: validatecontract-docker
 
 test-docker: unittest-docker contracttest-docker bddtest-docker
 
+debug-docker: build-docker
+	docker compose up -V --build app-debug
+
 run-docker: build-docker
 	docker compose --profile=run up --force-recreate -V --build --exit-code-from=app
 
