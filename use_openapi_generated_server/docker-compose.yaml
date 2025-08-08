@@ -29,6 +29,32 @@ services:
       - ct
       - run
 
+  app-debug:
+    container_name: use-openapi-generated-server-debug
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
+    build:
+      context: .
+      target: build-debug
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          ignore:
+            - bin/
+            - LICENSE
+            - README.org
+    ports:
+      - 8087:8087
+      - 40000:40000
+    restart: unless-stopped
+    networks:
+      - go_noodling
+    profiles:
+      - dbg
+
   app_unittests:
     container_name: use-openapi-generated-server-unittests
     build:
