@@ -98,8 +98,11 @@ func storeUrlHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer f.Close()
 
+	// NOTE: Apple Shortcuts injects newline into the values on POST.
+	url := strings.TrimSuffix(storeUrl.Url, "\n")
+	displayText := strings.TrimSuffix(storeUrl.DisplayText, "\n")
 	date := time.Now().String()
-	line := fmt.Sprintf("%s,%s,%s\n", storeUrl.Url, storeUrl.DisplayText, date)
+	line := fmt.Sprintf("%s,%s,%s\n", url, displayText, date)
 	log.Print(line)
 	f.WriteString(line)
 
