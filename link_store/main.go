@@ -7,11 +7,18 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type Page struct {
 	Title string
-	Lines []string
+	Lines []Line
+}
+
+type Line struct {
+	Url         string
+	DisplayText string
+	Date        string
 }
 
 func loadPageByLine() (*Page, error) {
@@ -21,7 +28,7 @@ func loadPageByLine() (*Page, error) {
 		return nil, err
 	}
 	r := bufio.NewReader(f)
-	var lines []string
+	var lines []Line
 	for {
 		line, err := r.ReadString('\n')
 		if err != nil {
@@ -32,7 +39,12 @@ func loadPageByLine() (*Page, error) {
 			log.Fatalf("read file line error: %v", err)
 			break
 		}
-		lines = append(lines, line)
+		fields := strings.Split(line, ",")
+		if len(fields) != 3 {
+			lines = append(lines, Line{fields[0], fields[0], "??"})
+		} else {
+			lines = append(lines, Line{fields[0], fields[1], fields[2]})
+		}
 	}
 	// log.Print(lines)
 	title := "Link Store"
