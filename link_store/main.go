@@ -27,6 +27,7 @@ func loadPageByLine() (*Page, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer f.Close()
 	r := bufio.NewReader(f)
 	var lines []Line
 	for {
@@ -46,6 +47,12 @@ func loadPageByLine() (*Page, error) {
 			lines = append(lines, Line{fields[0], fields[1], fields[2]})
 		}
 	}
+
+	// Reverse the existing file order: newest line first.
+	for i, j := 0, len(lines)-1; i < j; i, j = i+1, j-1 {
+		lines[i], lines[j] = lines[j], lines[i]
+	}
+
 	// log.Print(lines)
 	title := "Link Store"
 	return &Page{Title: title, Lines: lines}, nil
