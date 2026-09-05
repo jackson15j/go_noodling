@@ -1,0 +1,18 @@
+# Variables
+:port = 8080
+:host = http://localhost::port
+:headers = <<
+Content-Type: application/json
+
+# GET Webpage
+GET :host
+
+# POST URL1
+POST :host/api/store-url
+:headers
+{"Url": "https://github.com", "DisplayText": "Github"}
+
+# POST URL2
+POST :host/api/store-url
+:headers
+{"Url": "https://bbc.com", "DisplayText": "BBC"}
