@@ -7,3 +7,8 @@ real use-case is getting links from my iphone to non-apple products
 - *Output:* Web page with reverse chronological URL's.
 - *Input:* =Apple shortcut -> API -> POST URL=.
 - */Potential/ Solution:* Docker, go package, Echo? openapi?
+
+## Running the App
+
+- Go: `go run -v .`
+- Docker: `docker compose up --force-recreate -V --build`

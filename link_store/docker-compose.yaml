@@ -1,0 +1,22 @@
+services:
+  app:
+    # docker compose up --force-recreate -V --build
+    container_name: link-store
+    build:
+      context: .
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          ignore:
+            - bin/
+            - LICENSE
+            - README.org
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    networks:
+      - go_noodling
+
+networks:
+  go_noodling:
