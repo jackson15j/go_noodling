@@ -2,12 +2,15 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
+	"fmt"
 	"html/template"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 type Page struct {
@@ -69,11 +72,44 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 
 // TODO: Write inbound URLS to top of: `urls.txt`, as: `url\n` or `url,displayText,date\n`
 
-// TODO: API to POST URLS to.
+type StoreUrl struct {
+	Url         string
+	DisplayText string
+}
+
+// API to POST URLS to.
+// Looking into the standard library for a change:
+// https://www.jetbrains.com/guide/go/tutorials/rest_api_series/stdlib/
+// https://gobyexample.com/http-server
+func storeUrlHandler(w http.ResponseWriter, r *http.Request) {
+	var storeUrl StoreUrl
+	if err := json.NewDecoder(r.Body).Decode(&storeUrl); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	filename := "urls.txt"
+	f, err := os.OpenFile(
+		filename,
+		os.O_APPEND|os.O_WRONLY|os.O_CREATE,
+		0644,
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	defer f.Close()
+
+	date := time.Now().String()
+	line := fmt.Sprintf("%s,%s,%s\n", storeUrl.Url, storeUrl.DisplayText, date)
+	log.Print(line)
+	f.WriteString(line)
+
+	w.WriteHeader(http.StatusOK)
+}
 
 func main() {
 	log.Print("main")
 	http.HandleFunc("/", urlHandler)
+	http.HandleFunc("/api/store-url", storeUrlHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
