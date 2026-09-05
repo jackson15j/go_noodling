@@ -1,0 +1,9 @@
+# Link Store
+
+Originally I wanted to try making a link shortener for home, but the
+real use-case is getting links from my iphone to non-apple products
+(ie. no Airplay).
+
+- *Output:* Web page with reverse chronological URL's.
+- *Input:* =Apple shortcut -> API -> POST URL=.
+- */Potential/ Solution:* Docker, go package, Echo? openapi?
