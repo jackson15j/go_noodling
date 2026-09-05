@@ -29,3 +29,4 @@ go.work
 **/__debug*
 /link_store/link_store
 /link_store/urls.txt
+/link_store/data/

@@ -13,8 +13,10 @@ services:
             - LICENSE
             - README.org
     ports:
-      - "${STORE_LINK_PATH:-8080}:8080"
+      - "${LINK_STORE_PORT:-8080}:8080"
     restart: unless-stopped
+    volumes:
+      - "${LINK_STORE_PATH:-./data}/:/data"
     networks:
       - go_noodling
 

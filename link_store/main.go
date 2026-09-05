@@ -25,7 +25,7 @@ type Line struct {
 }
 
 func loadPageByLine() (*Page, error) {
-	filename := "urls.txt"
+	filename := "data/urls.txt"
 	f, err := os.Open(filename)
 	if err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ func storeUrlHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	filename := "urls.txt"
+	filename := "data/urls.txt"
 	f, err := os.OpenFile(
 		filename,
 		os.O_APPEND|os.O_WRONLY|os.O_CREATE,
