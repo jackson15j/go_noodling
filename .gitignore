@@ -27,3 +27,4 @@ go.work
 **/contract-test-reports/**
 *bin/
 **/__debug*
+/link_store/link_store
