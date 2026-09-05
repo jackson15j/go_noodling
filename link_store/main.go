@@ -60,6 +60,10 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// TODO: Write inbound URLS to top of: `urls.txt`, as: `url\n` or `url,displayText,date\n`
+
+// TODO: API to POST URLS to.
+
 func main() {
 	log.Print("main")
 	http.HandleFunc("/", urlHandler)
