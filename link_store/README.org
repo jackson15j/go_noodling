@@ -12,3 +12,4 @@ real use-case is getting links from my iphone to non-apple products
 
 - Go: `go run -v .`
 - Docker: `docker compose up --force-recreate -V --build`
+  - CopyPasta `.env.SAMPLE -> .env` to set a different port.

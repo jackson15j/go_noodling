@@ -13,7 +13,7 @@ services:
             - LICENSE
             - README.org
     ports:
-      - 8080:8080
+      - "${STORE_LINK_PATH:-8080}:8080"
     restart: unless-stopped
     networks:
       - go_noodling
